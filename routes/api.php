@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\authcontroller;
@@ -20,10 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::controller(NewcustomersController::class)->group(function(){
-  
+
+    
     Route::middleware('auth:sanctum')->get('newcustomer','index');
     Route::middleware('auth:sanctum')->post('new','create');
     Route::middleware('auth:sanctum')->put('update/{id}','update');
+    Route::middleware('auth:sanctum')->put('search','search');
 
  });
  

@@ -13,8 +13,47 @@ class NewcustomersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        if($request){
+
+            $perPage = $request->has('perPage') ? $request->input('perPage') : 10;
+          
+            $query = newcustomers::query();
+    
+            if ($request->has('name')) {
+                $query->where('name', 'LIKE', '%' . $request->input('name') . '%');
+            }
+    
+            if ($request->has('phone')) {
+                $query->where('phone', 'LIKE', '%' . $request->input('phone') . '%')
+                ->orWhere('phone2', 'LIKE', '%' . $request->input('phone') . '%')
+                ->orWhere('c_contact_number', 'LIKE', '%' . $request->input('phone') . '%')
+                ->orWhere('c_Second_contact_number', 'LIKE', '%' . $request->input('phone') . '%');
+            }
+
+            if ($request->has('email')) {
+                $query->where('email', $request->input('email'));
+            }
+            if ($request->has('suprimo')) {
+                $query->where('c_supremo_Id', 'LIKE', '%' . $request->input('suprimo') . '%');
+            }
+            $users = $query->paginate($perPage);
+          
+            $pagination = [
+                'total' =>  $users->total(),
+                'per_page' =>  $users->perPage(),
+                'current_page' => $users->currentPage(),
+                'last_page' =>  $users->lastPage(),
+            ];
+            return response()->json([
+                'data' =>  $users->items(),
+                'pagination' => $pagination,
+            ]);
+           
+        }
+        
+        
         $customer = newcustomers::get();
         return response()->json( $customer, 200);
     }
@@ -46,6 +85,33 @@ class NewcustomersController extends Controller
                 'message'=>'Customer Created Sucessfully' 
               ];
                return response()->json($response, 200);
+    }
+
+    public function search(Request $request){
+      
+        {
+            $query = newcustomers::query();
+    
+            if ($request->has('name')) {
+                $query->where('name', 'LIKE', '%' . $request->input('name') . '%');
+            }
+    
+            if ($request->has('phone')) {
+                $query->where('phone', 'LIKE', '%' . $request->input('phone') . '%')
+                ->orWhere('phone2', 'LIKE', '%' . $request->input('phone') . '%')
+                ->orWhere('c_contact_number', 'LIKE', '%' . $request->input('phone') . '%')
+                ->orWhere('c_Second_contact_number', 'LIKE', '%' . $request->input('phone') . '%');
+            }
+
+            if ($request->has('email')) {
+                $query->where('email', $request->input('email'));
+            }
+    
+            $results = $query->get();
+    
+            return response()->json($results);
+        }
+       
     }
 
     /**

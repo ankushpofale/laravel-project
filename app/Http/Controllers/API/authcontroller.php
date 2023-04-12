@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
+use Laravel\Sanctum\HasApiTokens;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
@@ -10,8 +10,11 @@ use App\Models\User;
 use App\Models\customer;
 use App\Models\newcustomers;
 use Illuminate\Support\Facades\Artisan;
+use Carbon\Carbon;
 class authcontroller extends Controller
+
 {
+
     //
     public function register(Request $request){
         $validater = Validator::make($request->all(),[
@@ -44,10 +47,17 @@ class authcontroller extends Controller
 
     }
     public function login(Request $request){
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+
+        $credentials = $request->only('email', 'password');
+        
+        if(Auth::attempt($credentials)){
             $user = Auth::user();
+            $user->tokens()->where('name', 'authToken')->update(['revoked' => true]);
+            $user->tokens()->delete();
+            $user->last_login_time = Carbon::now();
+            $user->save();
             $sucess['name'] =$user->name;
-            $sucess['token'] = $user->createToken('myApp')->plainTextToken;
+            $sucess['token'] = $user->createToken('myApp',['expiration' => 20])->plainTextToken;
             $sucess['name'] =$user->name;
             $response =[
               'sucess' => true,
@@ -62,7 +72,7 @@ class authcontroller extends Controller
                 'status'=>false,
                 'message'=>'UnAuthorised User'
             ];
-            return response()->json($response, 200);
+            return response()->json($response, 401);
             
         }
     }

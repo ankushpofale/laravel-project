@@ -1,7 +1,16 @@
 <?php
 
 return [
+// config/auth.php
 
+'api' => [
+    'driver' => 'passport',
+    'provider' => 'users',
+    'hash' => false,
+    'expire_in' => 60, // old option
+    'token_lifetime' => 20, // new option - sets the token lifetime to 20 minutes
+    'personal_access_token' => false,
+],
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults

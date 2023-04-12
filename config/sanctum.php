@@ -44,8 +44,8 @@ return [
     |
     */
 
-    'expiration' => null,
-
+    'expiration' => 2,
+    'token_lifetime' => env('SANCTUM_LIFETIME', 20),
     /*
     |--------------------------------------------------------------------------
     | Sanctum Middleware

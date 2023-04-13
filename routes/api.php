@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\authcontroller;
 use App\Http\Controllers\NewcustomersController;
+use App\Http\Controllers\OldcustomerController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,7 +29,14 @@ Route::controller(NewcustomersController::class)->group(function(){
     Route::middleware('auth:sanctum')->put('search','search');
 
  });
- 
+ Route::controller(OldcustomerController::class)->group(function(){
+
+    
+    Route::middleware('auth:sanctum')->get('oldcustomer','index');
+    Route::middleware('auth:sanctum')->put('oldcustomerupdate/{id}','update');
+
+
+ });
 Route::controller(authcontroller::class)->group(function(){
     Route::post('login', 'login');
     Route::post('register','register');

@@ -1,12 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\newcustomers;
-use Illuminate\Http\Request;
 use Auth;
 use Validator;
-class NewcustomersController extends Controller
+use Illuminate\Http\Request;
+use App\Models\Oldcustomer;
+class OldcustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +14,12 @@ class NewcustomersController extends Controller
      */
     public function index(Request $request)
     {
+      
         if($request){
 
             $perPage = $request->has('perPage') ? $request->input('perPage') : 10;
           
-            $query = newcustomers::query();
+            $query = Oldcustomer::query();
     
             if ($request->has('name')) {
                 $query->where('name', 'LIKE', '%' . $request->input('name') . '%')
@@ -56,15 +56,10 @@ class NewcustomersController extends Controller
         }
         
         
-        $customer = newcustomers::get();
+        $customer = Oldcustomer::get();
         return response()->json( $customer, 200);
+      
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(Request $request)
     {
         //
@@ -88,13 +83,6 @@ class NewcustomersController extends Controller
               ];
                return response()->json($response, 200);
     }
-
-    public function search(Request $request){
-      
-      
-       
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -109,21 +97,10 @@ class NewcustomersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\newcustomers  $newcustomers
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(newcustomers $newcustomers)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\newcustomers  $newcustomers
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(newcustomers $newcustomers)
+    public function show($id)
     {
         //
     }
@@ -132,7 +109,7 @@ class NewcustomersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\newcustomers  $newcustomers
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, newcustomers $newcustomers ,$id)
@@ -154,16 +131,14 @@ class NewcustomersController extends Controller
 
         return response()->json(['message' => 'Customer updated', 'customer' => $customer], 200);
     }
-
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\newcustomers  $newcustomers
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(newcustomers $newcustomers)
+    public function destroy($id)
     {
         //
     }
-  
 }

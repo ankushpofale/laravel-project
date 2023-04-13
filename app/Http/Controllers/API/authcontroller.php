@@ -57,7 +57,7 @@ class authcontroller extends Controller
             $user->last_login_time = Carbon::now();
             $user->save();
             $sucess['name'] =$user->name;
-            $sucess['token'] = $user->createToken('myApp',['expiration' => 20])->plainTextToken;
+            $sucess['token'] = $user->createToken('myApp',['expiration' => 50])->plainTextToken;
             $sucess['name'] =$user->name;
             $response =[
               'sucess' => true,

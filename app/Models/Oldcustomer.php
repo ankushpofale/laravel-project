@@ -1,0 +1,86 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Oldcustomer extends Model
+{
+    use HasFactory;
+    protected $fillable = [
+    
+        'name',
+        'nameId',
+        'firstName',
+         'lastName',
+         'title',
+         'company',
+         'phone',
+         'phone2',
+         'email',
+       'website',
+         'address',
+        'address2',
+        'city',
+         'state',
+        'zipcode',
+         'country',
+        'visibility',
+         'assignedTo',
+        'backgroundInfo',
+        'twitter',
+       'linkedin',
+        'skype',
+         'googleplus',
+         'lastUpdated',
+       'lastActivity',
+         'updatedBy',
+         'priority',
+         'leadSource',
+         'leadDate',
+         'rating',
+         'createDate',
+         'c_',
+         'facebook',
+         'otherUrl',
+         'leadtype',
+         'closedate',
+         'expectedCloseDate',
+         'interest',
+         'leadstatus',
+         'dealvalue',
+         'leadscore',
+         'dealstatus',
+         'timezone',
+         'doNotCall',
+         'doNotEmail',
+         'trackingKey',
+         'dupeCheck',
+         'fingerprintId',
+         'reverseIp',
+         'c_Tech_Notes',
+         'c_Valid_from',
+         'c_issue',
+         'c_Amount_paid',
+         'c_Account_id',
+         'c_Upgrade_Amt',
+         'c_Add_Security',
+         'c_O_system',
+         'c_services',
+         'c_Emi',
+         'c_Source',
+        'c_Case_status',
+        'c_res_email_sent',
+        'c_Welcome_email',
+        'c_Sale_Notes',
+        'c_Sale_updated_by',
+        'c_supremo_Id',
+        'c_contact_number',
+        'c_Second_contact_number',
+        'c_security_answer',
+        'c_security_question',
+     'c_test'
+     ];
+
+}
